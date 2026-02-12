@@ -10,7 +10,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import userRoutes from './src/routes/user.routes.js';
 import noteRoutes from './src/routes/notes.routes.js'
-import responseHandler from './src/middleware/ResponseHandler.js';
+import responseHandler from './src/middleware/responseHandler.js';
 
 
 
