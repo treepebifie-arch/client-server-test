@@ -1,0 +1,91 @@
+
+
+import React, { useEffect, useState } from "react";
+import "./getnotes.css";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+
+const Notes = () => {
+  const [notes, setNotes] = useState([]);
+
+  // Fetch all notes on component mount
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Updated URL (removed the double slash //)
+        const response = await axios.get("http://localhost:6500/api/v1/get-all-notes");
+        setNotes(response.data);
+      } catch (error) {
+        console.log("Error while fetching notes", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // Delete a specific note
+  const deleteNote = async (noteId) => {
+    await axios
+      .delete(`http://localhost:6500/api/v1/delete/note/${noteId}`)
+      .then((response) => {
+        // Filter out the deleted note from the state
+        setNotes((prevNotes) => prevNotes.filter((note) => note._id !== noteId));
+        toast.success(response.data.message || "Note deleted successfully", { 
+          position: "top-right" 
+        });
+      })
+      .catch((error) => {
+        console.log("Error deleting note", error);
+        toast.error("Failed to delete the note");
+      });
+  };
+
+  return (
+    <div className="noteTable">
+      <Link to="/add" type="button" className="btn btn-primary">
+        Add Note <i className="fa-solid fa-plus"></i>
+      </Link>
+
+      <table className="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">S.No.</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {notes.map((note, index) => {
+            return (
+              <tr key={note._id}>
+                <td>{index + 1}</td>
+                <td>{note.title}</td>
+                <td>{note.content}</td>
+                <td className="actionButtons">
+                  <Link
+                    to={`/update/` + note._id}
+                    type="button"
+                    className="btn btn-info"
+                  >
+                    <i className="fa-solid fa-pen-to-square"></i>
+                  </Link>
+
+                  <button
+                    onClick={() => deleteNote(note._id)}
+                    type="button"
+                    className="btn btn-danger"
+                  >
+                    <i className="fa-solid fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default Notes;

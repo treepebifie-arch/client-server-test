@@ -77,3 +77,13 @@ export const updatedRole = async (req, res, next) => {
         next (error)
     }
 };
+
+export const getAllUsersByAdmin = async (req, res, next) => {
+    try {
+        const role = req.user.role;
+        const users = await userService.getAllUsers(role);
+        res.success(users, `Retrieved ${users.length} users`);
+    } catch (error) {
+         next(error); 
+        }
+};

@@ -117,14 +117,29 @@ class userServiceActivities {
         if (!updateUser) {
             throw new AppError (404, 'Account not found' );
         }
+        if (updateUser.role === 'admin') {
+            throw new AppError (400, `${updateUser.name} is already an admin`)
+        }
         if (!updateUser.isVerified) {
-            throw new AppError (404, 'Cannot make Admin, please verify your account first')
+            throw new AppError (404, 'Cannot make Admin, please verify user account first')
         }
         
         return updateUser;
     }
+    
+    
+    // Get All Notes (Admin only)
+    async getAllUsers(role) {
+        if ( role !== 'admin') {
+            throw new AppError(403, 'access denied')
+        }
+        
+        const notes = await User.find()
+        if (!notes) {
+            throw new AppError(404, "Note not found")
+        }
+        return notes
+    }
 };
-
-
 
 export default userServiceActivities;
