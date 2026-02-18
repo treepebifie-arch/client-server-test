@@ -20,14 +20,14 @@ const app = express();
 
 // Middleware setup
 app.use(helmet());
-app.use(cors());
+app.use(cors({origin: 'http://localhost:3000'}));
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 
 
 const limiter = rateLimiter({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 10 // limit each IP to 10 requests per windowMs
+  max: 15 // limit each IP to 15 requests per windowMs
 });
 
 app.use(limiter);

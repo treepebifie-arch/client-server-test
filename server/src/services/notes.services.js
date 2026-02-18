@@ -66,7 +66,7 @@ class NoteServiceActivity {
         if (!note) {
             throw new AppError(404, "Note not found");
         };
-        return note;
+        
     }
 
     async togglePinNote(noteId, userId) {

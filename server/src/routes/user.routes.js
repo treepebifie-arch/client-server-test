@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post ('/signup', signupSchema, onBoardUser);
 router.post ('/login', loginSchema, loginUser);
-router.put ('/verify-account', verifyAccount);
+router.post ('/verify-account', verifyAccount);
 router.put ('/resend-otp', resendOtp);
 router.put ('/:id/make-admin', isAuth, updatedRole)
 router.get ('/get-all-users', isAuth, getAllUsersByAdmin)

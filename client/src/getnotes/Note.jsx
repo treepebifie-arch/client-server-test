@@ -1,7 +1,7 @@
 
 
 import React, { useEffect, useState } from "react";
-import "./getnotes.css";
+import "./note.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -12,15 +12,22 @@ const Notes = () => {
   // Fetch all notes on component mount
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        // Updated URL (removed the double slash //)
-        const response = await axios.get("http://localhost:6500/api/v1/get-all-notes");
-        setNotes(response.data);
-      } catch (error) {
-        console.log("Error while fetching notes", error);
-      }
-    };
+  try {
+    const token = localStorage.getItem('token');
+    const response = await axios.get("http://localhost:6500/api/v1/note/get-all-notes", {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    const actualNotes = response.data.data; 
+    setNotes(actualNotes);
+    
+  } catch (error) {
+    console.error("Fetch failed", error);
+  }
+};
+   
     fetchData();
+    
   }, []);
 
   // Delete a specific note
@@ -42,7 +49,7 @@ const Notes = () => {
 
   return (
     <div className="noteTable">
-      <Link to="/add" type="button" className="btn btn-primary">
+      <Link to="/add" type="button" className="btn btn-secondary">
         Add Note <i className="fa-solid fa-plus"></i>
       </Link>
 
@@ -51,14 +58,14 @@ const Notes = () => {
           <tr>
             <th scope="col">S.No.</th>
             <th scope="col">Title</th>
-            <th scope="col">Description</th>
+            <th scope="col">Content</th>
             <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>
           {notes.map((note, index) => {
             return (
-              <tr key={note._id}>
+              <tr>
                 <td>{index + 1}</td>
                 <td>{note.title}</td>
                 <td>{note.content}</td>

@@ -1,0 +1,33 @@
+.login {
+  background-color: white;
+  width: 25%;
+  margin: 50px auto;
+  padding: 40px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.065);
+}
+.loginForm .inputGroup {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.loginForm .inputGroup label {
+  margin-top: 5px;
+  
+}
+
+.loginForm .inputGroup input {
+  margin-bottom: 5px;
+  padding: 10px;
+}
+.loginForm .inputGroup button {
+  margin-top: 8px;
+}
+.login h3 {
+  margin-top: 10px;
+  text-align: center;
+  font-weight: initial;
+  color: rgb(83, 0, 139);
+  text-transform: Sentence capitalize;
+}

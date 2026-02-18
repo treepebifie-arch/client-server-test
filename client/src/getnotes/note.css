@@ -1,4 +1,4 @@
-.userTable {
+.noteTable {
   width: 60%;
   margin: 50px auto;
   background-color: white;
@@ -6,16 +6,22 @@
   border-radius: 10px;
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.065);
 }
-.userTable table {
+.noteTable table {
   width: 100%;
   margin-top: 30px;
 }
-.userTable table thead th {
-  background-color: darkcyan;
+.noteTable table thead th {
+  background-color: rgb(38, 138, 196);
   color: white;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
-.userTable table tbody td {
+.noteTable table tbody td {
   padding: 10px;
   text-align: center;
   vertical-align: middle;
