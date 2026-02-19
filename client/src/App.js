@@ -7,14 +7,15 @@ import AddNote from "./addnote/AddNote";
 import Login from "./Auth/loginuser/LoginUser";
 import Signup from "./Auth/signup/signup";
 import VerifyUser from "./Auth/verify/verifyuser";
+import FindNotes from "./getnotes/FindNotes";
 function App() {
   const route = createBrowserRouter([
     {
-      path: "/",
+      path: "/signup",
       element: <Signup />,
     },
     {
-      path: "/login",
+      path: "/",
       element: <Login />,
     },
     {
@@ -22,10 +23,13 @@ function App() {
       element: <VerifyUser />,
     },
 
-
     {
-      path: '/note',
+      path: '/get-all-notes',
       element: <Note />
+    }, 
+    {
+      path: '/findnote',
+      element: <FindNotes />
     }, 
 
     {

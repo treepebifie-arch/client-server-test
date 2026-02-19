@@ -22,20 +22,29 @@ const Login = () => {
       
       const response = await axios.post("http://localhost:6500/api/v1/user/login", formData);
       
-     const token = response.data.data.token; 
+     const {token, role } = response.data.data; 
 
     if (token) {
       localStorage.setItem('token', token);
-      toast.success("Login Successful!");
-      navigate("/");
-    }
+      localStorage.setItem("role", role);
 
-      toast.success(response.data.message || "Login Successful!", { position: "top-right" });
-      navigate("/note");
+      toast.success(response.data.data.message || "Login Successful!", { position: "top-right" });
+
+      const user = response.data.data.user;
+
+      console.log("User object:", user);
+      console.log("User role:", user?.role)
+
+      if (user?.role === "admin") {
+            navigate("/get-all-notes");
+          } else {
+            navigate("/findnote");
+          };
+    }
 
     } catch (err) {
 
-      const errorMsg = err.response?.data?.message || "Login failed. Check your credentials.";
+      const errorMsg = err.response?.data?.data?.message || "Login failed. Check your credentials.";
       toast.error(errorMsg, { position: "top-right" });
       console.error("Login Error:", err);
     }
@@ -44,7 +53,8 @@ const Login = () => {
   return (
     <div className="login">
 
-      <h3>Login to get started</h3>
+      <h2>Welcome!!!</h2>
+      <h5>Please log in to your account to continue</h5>
 
       <form className="loginForm" onSubmit={handleSubmit}>
         <div className="inputGroup">
@@ -76,9 +86,12 @@ const Login = () => {
         <div className="inputGroup">
           
           <button type="submit" className="btn btn-primary">
-            Login
+            Continue
           </button>
         </div>
+        <h6>Don't have an account? 
+          <Link to= '/signup'> Sign up </Link>
+        </h6>
       </form>
     </div>
   );

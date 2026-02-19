@@ -23,18 +23,30 @@ const AddNote = () => {
   // Handle form submission
   const submitForm = async (e) => {
     e.preventDefault();
-    await axios
-      .post("http://localhost:6500/api/v1/note/add-notes", note) // Updated endpoint
-      .then((response) => {
-        toast.success(response.data.message || "Note added successfully!", { 
-          position: "top-right" 
-        });
-        navigate("/"); // Redirect to home or notes list
-      })
-      .catch((error) => {
-        console.error("Error adding note:", error);
-        toast.error("Something went wrong", { position: "top-right" });
-      });
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.post("http://localhost:6500/api/v1/note/add-notes", note, {
+      headers: { Authorization: `Bearer ${token}` }
+    }); 
+      
+        
+          toast.success(response.data.message || "Note added successfully!", { 
+            position: "top-right" 
+          });
+          const user = JSON.parse(localStorage.getItem("user"));       
+          if (user?.role === "admin") {
+            navigate("/get-all-notes");
+          } else {
+            navigate("/findnote");
+          }
+         
+        
+        
+    } catch (err) {
+      const errorMsg = err.response?.data?.data?.message || "Cannot add note.";
+      toast.error(errorMsg, { position: "top-right" });
+      console.error("Error:", err);
+    }
   };
 
   return (

@@ -23,7 +23,6 @@ const Signup = () => {
       toast.success(response.data.message || "Account created successfully!", { position: "top-right" });
       navigate("/verify");
     } catch (err) {
-
       const errorMsg = err.response?.data?. data?.message || "Account creation failed.";
       toast.error(errorMsg, { position: "top-right" });
       console.error("Signup Error:", err);
@@ -74,20 +73,20 @@ const Signup = () => {
             required
           />
         </div>
-        <h6>Already have an account? 
-          <p>
-            <Link to='/login'>
-              Login
-          </Link>
-          </p>
-          
-        </h6>
         <div className="inputGroup">
           
           <button type="submit" className="btn btn-primary">
             Create Account
           </button>
         </div>
+        <h6>Already have an account? 
+          <p>
+            <Link to='/'>
+              Login
+          </Link>
+          </p>
+          
+        </h6>
       </form>
     </div>
   );
